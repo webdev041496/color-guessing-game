@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Color Guessing Game</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        div {
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" 
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+</head>
+<body>
+
+    <h1>&#127752; Color Guessing Game &#127752;</h1>
+    <div>
+        <button type="button" class="btn btn-primary" onclick="runGame()">Start Game</button>
+    </div>
+    
+
+    <script>
+        const COLORS_ARRAY = ["blue", "cyan", "gold", "gray", "green", "magenta", "orange", "red", "white", "yellow"];
+
+
+        // Starts running the game after the "Start Game" button is clicked
+        function runGame() {
+            let guess = "";
+            let correct = false;
+            let numGuesses = 0;
+
+            const targetIndex = Math.floor(Math.random() * COLORS_ARRAY.length);
+            const target = COLORS_ARRAY[targetIndex];
+            console.log("The target is: " + target);
+
+            do {
+                guess = prompt("I am thinking of one of these colors:\n\n" + COLORS_ARRAY.join(", ") + "\n\nWhat color am I thinking of?\n");
+                if (guess === null) {
+                    alert("The game has ended.");  // Displays message to user when user exits the game (i.e., user clicks the "Cancel" button when prompt window is open)
+                    return; 
+                }
+                correct = checkGuess(guess, target);
+                ++numGuesses;
+
+            } while (!correct);
+
+            // Displays message to user after color is guessed correctly as well as change the webpage background color to correct color
+            alert("Congratulations! You successfully guessed the color! " + " Number of guesses: " + numGuesses); 
+            if (correct === true) {
+                document.body.style.background = guess;
+            }
+            
+        }       
+
+        // Checks the user's guess against the target color
+        function checkGuess(guess, target) {
+            let correct = false;
+
+            if (!COLORS_ARRAY.includes(guess)) {
+                alert("The color you chose is not recognized.\n\nPlease try again.");
+            } else if (guess > target) {
+                alert("You guessed a color that is alphabetically higher than the mystery color. \n\nExample: Words that start with letter 'a' are lower than words that start with 'b' and words that start with 'b' are higher than words that start with 'a'.\n\nPlease try again.");
+                
+            } else if (guess < target) {
+                alert("You guessed a color that is alphabetically lower than the mystery color. \n\nExample: Words that start with letter 'a' are lower than words that start with 'b' and words that start with 'b' are higher than words that start with 'a'.\n\nPlease try again.");
+            } else {
+                correct = true;
+            }
+
+            return correct;
+            
+        }
+
+    </script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+
+
+
+</html>
